@@ -2,9 +2,6 @@
 import './App.css';
 import React,{Component} from 'react';
 // import Pagination from 'react-bootstrap/Pagination';
-// import Pagination from './components/Pagination';
-// import Card from './components/Card';
-
 
 class App extends React.Component {
   constructor(){
@@ -29,16 +26,35 @@ class App extends React.Component {
     .catch((error)=>console.log(error))
   }
   
-  
   handleClick = (event) => {
-    // const {currentPage} = this.state
     this.setState({
       currentPage: Number(event.target.id)
     });
-    //  console.log(currentPage, "currentPage")
   }
 
+  handleNext=()=>{
+    const { currentPage, countries, countriesPerPage } = this.state;
+    if(currentPage<countries.length/countriesPerPage){
+      this.setState({currentPage:currentPage+1})
+    } 
+  }
   
+  handlePrev=()=>{
+    const {currentPage} =this.state;
+    if(currentPage>0 && currentPage!=1){
+      this.setState({currentPage:currentPage-1})
+    } 
+  }
+  handleFirst=()=>{
+    this.setState({currentPage:1})
+  }
+
+  handleLast=()=>{
+    const { countries, countriesPerPage } = this.state;
+    const pageNumbers=Math.ceil(countries.length/countriesPerPage)
+    this.setState({currentPage:pageNumbers})
+  }
+
   render() {
     const {countries, isLoading, countriesPerPage, currentPage} = this.state;
 
@@ -50,17 +66,17 @@ class App extends React.Component {
     console.log(currentCountry, "currentcountry")
     
 
-    const displayC = isLoading ? (<>
+    const displayCountries = isLoading ? (<>
       <div className='card'>
         {currentCountry.map((country, index)=>
           <section className='each-card'>
-          <img src={country.flags.png} alt={country.name.common} flag />
-          <h5>{country.name.common}</h5>
-          <p><strong>Cap:</strong><span>{country.capital}</span></p>
-          <p><strong>Pop:</strong><span>{country.population}</span></p>
-        </section>
+            <img src={country.flags.png} alt={country.name.common} flag />
+            <h5>{country.name.common}</h5>
+            <p><strong>Cap:</strong><span>{country.capital}</span></p>
+            <p><strong>Pop:</strong><span>{country.population}</span></p>
+          </section>
         )}
-  </div>
+      </div>
     </>) : (
       <i
         className="fa fa-spinner fa-spin"
@@ -69,7 +85,7 @@ class App extends React.Component {
     )
   
       let pageNumbers = [];
-      for(let i=1; i <= (countries.length/countriesPerPage); i++){
+      for(let i=1; i <= Math.ceil(countries.length/countriesPerPage); i++){
           pageNumbers.push(i)
       }
       console.log(pageNumbers)
@@ -77,7 +93,7 @@ class App extends React.Component {
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         <li
-          className='page-link'
+          className={currentPage===number ? 'active page-link' : 'page-link'}
           key={number}
           id={number}
           onClick={this.handleClick}
@@ -91,27 +107,25 @@ class App extends React.Component {
       <>
       <div className='main-container'>
         <h2 className='header'>WORLD COUNTRIES WITH REST API</h2>
-        <div className='pagination'>
-          <section>
-           <p className='count'>{countries.length} countries</p>
-          </section>
-          <section className='flex'>
-            <div>{currentPage}/{pageNumbers.length} pages</div>
-            <div>
-          
-
-            <ul className='flex-links'>
-              <li className='page-link'>prev</li>
-              {renderPageNumbers}
-              <li className='page-link'>next</li>
-            </ul>
-          
-          
-            </div>
-          </section>
+          <div className='pagination'>
+            <section>
+              <p className='count'>{countries.length} countries</p>
+            </section>
+            <section className='flex'>
+              <div>{currentPage}/{pageNumbers.length} pages</div>
+              <div>
+                <ul className='flex-links'>
+                  <li onClick={this.handleFirst} className='page-link'>first</li>
+                  <li onClick={this.handlePrev} className={currentPage === 1 ? 'disabled page-link' : 'page-link'}>prev</li>
+                  {renderPageNumbers}
+                  <li onClick={this.handleNext} className={currentPage === pageNumbers.length ? 'disabled page-link' : 'page-link'}>next</li>
+                  <li onClick={this.handleLast} className='page-link'>last</li>
+                </ul>
+              </div>
+            </section>
           </div>
           <div className='countries'>
-            {displayC}
+            {displayCountries}
           </div>
       </div>
       </>

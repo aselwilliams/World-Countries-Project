@@ -80,3 +80,10 @@ img {
   display: flex;
   justify-content: end;
 }
+.active{
+  background-color: blue;
+  color:white;
+}
+.disabled{
+  color: grey;
+}
