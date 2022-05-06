@@ -1,4 +1,4 @@
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import React,{Component} from 'react';
 // import Pagination from 'react-bootstrap/Pagination';
@@ -32,26 +32,26 @@ class App extends React.Component {
     });
   }
 
-  handleNext=()=>{
+  handleNext = () => {
     const { currentPage, countries, countriesPerPage } = this.state;
-    if(currentPage<countries.length/countriesPerPage){
-      this.setState({currentPage:currentPage+1})
+    if(currentPage < countries.length/countriesPerPage){
+      this.setState({currentPage:currentPage + 1})
     } 
   }
   
-  handlePrev=()=>{
-    const {currentPage} =this.state;
-    if(currentPage>0 && currentPage!=1){
-      this.setState({currentPage:currentPage-1})
+  handlePrev = () => {
+    const {currentPage} = this.state;
+    if(currentPage > 0 && currentPage!= 1){
+      this.setState({currentPage:currentPage - 1})
     } 
   }
-  handleFirst=()=>{
+  handleFirst = () => {
     this.setState({currentPage:1})
   }
 
-  handleLast=()=>{
+  handleLast = () => {
     const { countries, countriesPerPage } = this.state;
-    const pageNumbers=Math.ceil(countries.length/countriesPerPage)
+    const pageNumbers = Math.ceil(countries.length / countriesPerPage)
     this.setState({currentPage:pageNumbers})
   }
 
@@ -61,19 +61,15 @@ class App extends React.Component {
     const lastIndex = currentPage * countriesPerPage
     const firstIndex = lastIndex - countriesPerPage
     const currentCountry = countries.slice(firstIndex, lastIndex)
-    console.log(lastIndex, "lastIndex")
-    console.log(firstIndex, "FIndex")
-    console.log(currentCountry, "currentcountry")
-    
-
+   
     const displayCountries = isLoading ? (<>
       <div className='card'>
         {currentCountry.map((country, index)=>
           <section className='each-card'>
             <img src={country.flags.png} alt={country.name.common} flag />
             <h5>{country.name.common}</h5>
-            <p><strong>Cap:</strong><span>{country.capital}</span></p>
-            <p><strong>Pop:</strong><span>{country.population}</span></p>
+            <p><strong>Cap:</strong><span className={country.capital ? '' : 'no-record'}>{country.capital ? country.capital : "No record"}</span></p>
+            <p><strong>Pop:</strong><span className={country.population ? '' : 'no-record'}>{country.population ? country.population : 'No record'}</span></p>
           </section>
         )}
       </div>
