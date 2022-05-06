@@ -10,8 +10,8 @@ body {
 }
 
 h5 {
-  margin-top:5px;
-  padding:5px
+  margin-top:7px;
+  font-weight: bold;
 }
 
 .main-container {
@@ -32,7 +32,6 @@ h5 {
   align-items: center;
   border-bottom: 1px solid #eee;
   border-top: 1px solid #eee;
-  
 }
 
 .flex {
