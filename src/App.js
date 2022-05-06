@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import React,{Component} from 'react';
 import { Pagination } from "react-bootstrap";
+import Card from './Card'
 
 class App extends React.Component {
   constructor(){
@@ -34,14 +35,14 @@ class App extends React.Component {
 
   handleNext = () => {
     const { currentPage, countries, countriesPerPage } = this.state;
-    if(currentPage < countries.length/countriesPerPage){
+    if(currentPage < Math.ceil(countries.length/countriesPerPage)){
       this.setState({currentPage:currentPage + 1})
     } 
   }
   
   handlePrev = () => {
     const {currentPage} = this.state;
-    if(currentPage > 0 && currentPage!= 1){
+    if(currentPage > 1){
       this.setState({currentPage:currentPage - 1})
     } 
   }
@@ -61,30 +62,12 @@ class App extends React.Component {
     const lastIndex = currentPage * countriesPerPage
     const firstIndex = lastIndex - countriesPerPage
     const currentCountry = countries.slice(firstIndex, lastIndex)
-   
-    const displayCountries = isLoading ? (<>
-      <div className='card'>
-        {currentCountry.map((country, index)=>
-          <section className='each-card'>
-            <img src={country.flags.png} alt={country.name.common} flag />
-            <h5>{country.name.common}</h5>
-            <p><strong>Cap:</strong><span className={country.capital ? '' : 'no-record'}>{country.capital ? country.capital : "No record"}</span></p>
-            <p><strong>Pop:</strong><span className={country.population ? '' : 'no-record'}>{country.population ? country.population : 'No record'}</span></p>
-          </section>
-        )}
-      </div>
-    </>) : (
-      <i
-        className="fa fa-spinner fa-spin"
-        style={{ fontSize: "48px" }}
-      ></i>
-    )
   
-      let pageNumbers = [];
-      for(let i=1; i <= Math.ceil(countries.length/countriesPerPage); i++){
-          pageNumbers.push(i)
-      }
-      console.log(pageNumbers)
+    let pageNumbers = [];
+    for(let i=1; i <= Math.ceil(countries.length/countriesPerPage); i++){
+        pageNumbers.push(i)
+    }
+    console.log(pageNumbers)
   
     const renderPageNumbers = pageNumbers.map(number => {
       return (
@@ -121,7 +104,12 @@ class App extends React.Component {
             </section>
           </div>
           <div className='countries'>
-            {displayCountries}
+            {isLoading ? ( <Card currentCountry={currentCountry} />) : (
+              <i
+                className="fa fa-spinner fa-spin"
+                style={{ fontSize: "48px" }}>
+                </i>
+                )}
           </div>
       </div>
       </>
