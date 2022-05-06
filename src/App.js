@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import React,{Component} from 'react';
-// import Pagination from 'react-bootstrap/Pagination';
+import { Pagination } from "react-bootstrap";
 
 class App extends React.Component {
   constructor(){
@@ -88,14 +88,14 @@ class App extends React.Component {
   
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <li
-          className={currentPage===number ? 'active page-link' : 'page-link'}
+        <Pagination.Item
+          className={currentPage===number && 'active'}
           key={number}
           id={number}
           onClick={this.handleClick}
         >
           {number}
-        </li>
+        </Pagination.Item>
       );
     });
 
@@ -110,13 +110,13 @@ class App extends React.Component {
             <section className='flex'>
               <div>{currentPage}/{pageNumbers.length} pages</div>
               <div>
-                <ul className='flex-links'>
-                  <li onClick={this.handleFirst} className='page-link'>first</li>
-                  <li onClick={this.handlePrev} className={currentPage === 1 ? 'disabled page-link' : 'page-link'}>prev</li>
+                <Pagination>
+                  <Pagination.First onClick={this.handleFirst} />
+                  <Pagination.Prev onClick={this.handlePrev} className={currentPage === 1 && 'disabled'} />
                   {renderPageNumbers}
-                  <li onClick={this.handleNext} className={currentPage === pageNumbers.length ? 'disabled page-link' : 'page-link'}>next</li>
-                  <li onClick={this.handleLast} className='page-link'>last</li>
-                </ul>
+                  <Pagination.Next onClick={this.handleNext} className={currentPage === pageNumbers.length && 'disabled'} />
+                  <Pagination.Last onClick={this.handleLast} />
+                </Pagination>
               </div>
             </section>
           </div>
