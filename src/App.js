@@ -111,11 +111,11 @@ class App extends React.Component {
               <div>{currentPage}/{pageNumbers.length} pages</div>
               <div>
                 <Pagination>
-                  <Pagination.First onClick={this.handleFirst} />
+                  <Pagination.First onClick={this.handleFirst} className={currentPage === 1 && 'disabled'} />
                   <Pagination.Prev onClick={this.handlePrev} className={currentPage === 1 && 'disabled'} />
                   {renderPageNumbers}
                   <Pagination.Next onClick={this.handleNext} className={currentPage === pageNumbers.length && 'disabled'} />
-                  <Pagination.Last onClick={this.handleLast} />
+                  <Pagination.Last onClick={this.handleLast} className={currentPage === pageNumbers.length && 'disabled'} />
                 </Pagination>
               </div>
             </section>
