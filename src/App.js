@@ -63,7 +63,6 @@ class App extends React.Component {
       this.setState({currentPage:currentPage + 1})
     } 
     this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)+1})
-
   }
 
   handlePrev = () => {
@@ -71,26 +70,12 @@ class App extends React.Component {
     if(currentPage > 1){
       this.setState({currentPage:currentPage - 1})
     } 
-    if(currentPage2 > 1){
-      this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)-1})
+    if(currentPage===(countriesPerPage2*2)+1 || currentPage===countriesPerPage2+1){ 
+      this.setState({currentPage2:currentPage2-1})
+      console.log(currentPage2,"cPage2")
+      console.log(currentPage,'cPage1')
     }
   }
-  // handleFirst = (index) => {
-  //   const { countriesPerPage2,currentPage2 } = this.state;
-  //   if(currentPage2>1){
-  //     this.setState({currentPage2:currentPage2-1})
-  //     this.setState({currentPage: index-countriesPerPage2})
-  //   }
-  // }
-
-  // handleLast = (index) => {
-  //   const { countriesPerPage2,currentPage2 } = this.state;
-    
-  //   if(currentPage2<countriesPerPage2){
-  //     this.setState({currentPage2:currentPage2+1})
-  //     this.setState({currentPage: index+countriesPerPage2})
-  //   }
-  // }
 
   render() {
     const {countries, isLoading, countriesPerPage, currentPage,currentPage2,countriesPerPage2} = this.state;
@@ -103,7 +88,6 @@ class App extends React.Component {
     for(let i=1; i <= Math.ceil(countries.length/countriesPerPage); i++){
         pageNumbers.push(i)
     }
-    console.log(pageNumbers)
   
     const lastIndex2 = currentPage2 * countriesPerPage2
     const firstIndex2 = lastIndex2 - countriesPerPage2
@@ -135,11 +119,11 @@ class App extends React.Component {
               <div>{currentPage}/{pageNumbers.length} pages</div>
               <div>
                 <Pagination>
-                  <Pagination.First onClick={()=>this.handleFirst(currentCountry2[0])} className={currentPage === 1 && 'disabled'} />
+                  <Pagination.First onClick={this.handleFirst} className={currentPage === 1 && 'disabled'} />
                   <Pagination.Prev onClick={this.handlePrev} className={currentPage === 1 && 'disabled'} />
                   {renderPageNumbers}
                   <Pagination.Next onClick={this.handleNext} className={currentPage === pageNumbers.length && 'disabled'} />
-                  <Pagination.Last onClick={()=>this.handleLast(currentCountry2[0])} className={currentPage === pageNumbers.length && 'disabled'} />
+                  <Pagination.Last onClick={this.handleLast} className={currentPage === pageNumbers.length && 'disabled'} />
                 </Pagination>
               </div>
             </section>
