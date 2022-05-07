@@ -11,7 +11,9 @@ class App extends React.Component {
       countries: [],
       isLoading: false,
       countriesPerPage: 18,
-      currentPage: 1
+      currentPage: 1,
+      countriesPerPage2:5,
+      currentPage2:1
     }
   }
   
@@ -34,30 +36,65 @@ class App extends React.Component {
   }
 
   handleNext = () => {
-    const { currentPage, countries, countriesPerPage } = this.state;
+    const { currentPage, countries, countriesPerPage,countriesPerPage2 } = this.state;
     if(currentPage < Math.ceil(countries.length/countriesPerPage)){
       this.setState({currentPage:currentPage + 1})
     } 
+    this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)+1})
+
   }
-  
+
   handlePrev = () => {
-    const {currentPage} = this.state;
+    const {currentPage,currentPage2} = this.state;
     if(currentPage > 1){
       this.setState({currentPage:currentPage - 1})
     } 
+    if(currentPage2 > 1){
+      this.setState({currentPage2:currentPage2-1})
+    }
   }
-  handleFirst = () => {
-    this.setState({currentPage:1})
+  // handleNext = () => {
+  //   const { currentPage, countries, countriesPerPage } = this.state;
+  //   if(currentPage < Math.ceil(countries.length/countriesPerPage)){
+  //     this.setState({currentPage:currentPage + 1})
+  //   } 
+  // }
+  
+  // handlePrev = () => {
+  //   const {currentPage} = this.state;
+  //   if(currentPage > 1){
+  //     this.setState({currentPage:currentPage - 1})
+  //   } 
+  // }
+  // handleFirst = () => {
+  //   this.setState({currentPage:1})
+  // }
+
+  // handleLast = () => {
+  //   const { countries, countriesPerPage } = this.state;
+  //   const pageNumbers = Math.ceil(countries.length / countriesPerPage)
+  //   this.setState({currentPage:pageNumbers})
+  // }
+
+  handleFirst = (index) => {
+    const { countriesPerPage2,currentPage2 } = this.state;
+    if(currentPage2>1){
+      this.setState({currentPage2:currentPage2-1})
+      this.setState({currentPage: index-countriesPerPage2})
+    }
   }
 
-  handleLast = () => {
-    const { countries, countriesPerPage } = this.state;
-    const pageNumbers = Math.ceil(countries.length / countriesPerPage)
-    this.setState({currentPage:pageNumbers})
+  handleLast = (index) => {
+    const { countriesPerPage2,currentPage2 } = this.state;
+    
+    if(currentPage2<countriesPerPage2){
+      this.setState({currentPage2:currentPage2+1})
+      this.setState({currentPage: index+countriesPerPage2})
+    }
   }
 
   render() {
-    const {countries, isLoading, countriesPerPage, currentPage} = this.state;
+    const {countries, isLoading, countriesPerPage, currentPage,currentPage2,countriesPerPage2} = this.state;
 
     const lastIndex = currentPage * countriesPerPage
     const firstIndex = lastIndex - countriesPerPage
@@ -69,7 +106,12 @@ class App extends React.Component {
     }
     console.log(pageNumbers)
   
-    const renderPageNumbers = pageNumbers.map(number => {
+    const lastIndex2 = currentPage2 * countriesPerPage2
+    const firstIndex2 = lastIndex2 - countriesPerPage2
+    const currentCountry2 = pageNumbers.slice(firstIndex2, lastIndex2)
+  
+
+    const renderPageNumbers = currentCountry2.map(number => {
       return (
         <Pagination.Item
           className={currentPage===number && 'active'}
@@ -94,11 +136,11 @@ class App extends React.Component {
               <div>{currentPage}/{pageNumbers.length} pages</div>
               <div>
                 <Pagination>
-                  <Pagination.First onClick={this.handleFirst} className={currentPage === 1 && 'disabled'} />
+                  <Pagination.First onClick={()=>this.handleFirst(currentCountry2[0])} className={currentPage === 1 && 'disabled'} />
                   <Pagination.Prev onClick={this.handlePrev} className={currentPage === 1 && 'disabled'} />
                   {renderPageNumbers}
                   <Pagination.Next onClick={this.handleNext} className={currentPage === pageNumbers.length && 'disabled'} />
-                  <Pagination.Last onClick={this.handleLast} className={currentPage === pageNumbers.length && 'disabled'} />
+                  <Pagination.Last onClick={()=>this.handleLast(currentCountry2[0])} className={currentPage === pageNumbers.length && 'disabled'} />
                 </Pagination>
               </div>
             </section>
