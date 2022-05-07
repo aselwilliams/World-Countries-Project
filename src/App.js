@@ -35,24 +35,6 @@ class App extends React.Component {
     });
   }
 
-  handleNext = () => {
-    const { currentPage, countries, countriesPerPage,countriesPerPage2 } = this.state;
-    if(currentPage < Math.ceil(countries.length/countriesPerPage)){
-      this.setState({currentPage:currentPage + 1})
-    } 
-    this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)+1})
-
-  }
-
-  handlePrev = () => {
-    const {currentPage,currentPage2} = this.state;
-    if(currentPage > 1){
-      this.setState({currentPage:currentPage - 1})
-    } 
-    if(currentPage2 > 1){
-      this.setState({currentPage2:currentPage2-1})
-    }
-  }
   // handleNext = () => {
   //   const { currentPage, countries, countriesPerPage } = this.state;
   //   if(currentPage < Math.ceil(countries.length/countriesPerPage)){
@@ -66,32 +48,49 @@ class App extends React.Component {
   //     this.setState({currentPage:currentPage - 1})
   //   } 
   // }
-  // handleFirst = () => {
-  //   this.setState({currentPage:1})
-  // }
-
-  // handleLast = () => {
-  //   const { countries, countriesPerPage } = this.state;
-  //   const pageNumbers = Math.ceil(countries.length / countriesPerPage)
-  //   this.setState({currentPage:pageNumbers})
-  // }
-
-  handleFirst = (index) => {
-    const { countriesPerPage2,currentPage2 } = this.state;
-    if(currentPage2>1){
-      this.setState({currentPage2:currentPage2-1})
-      this.setState({currentPage: index-countriesPerPage2})
-    }
+  handleFirst = () => {
+    this.setState({currentPage:1})
   }
 
-  handleLast = (index) => {
-    const { countriesPerPage2,currentPage2 } = this.state;
+  handleLast = () => {
+    const { countries, countriesPerPage } = this.state;
+    const pageNumbers = Math.ceil(countries.length / countriesPerPage)
+    this.setState({currentPage:pageNumbers})
+  }
+  handleNext = () => {
+    const { currentPage, countries, countriesPerPage,countriesPerPage2 } = this.state;
+    if(currentPage < Math.ceil(countries.length/countriesPerPage)){
+      this.setState({currentPage:currentPage + 1})
+    } 
+    this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)+1})
+
+  }
+
+  handlePrev = () => {
+    const {currentPage,currentPage2,countriesPerPage2} = this.state;
+    if(currentPage > 1){
+      this.setState({currentPage:currentPage - 1})
+    } 
+    if(currentPage2 > 1){
+      this.setState({currentPage2:Math.floor(currentPage/countriesPerPage2)-1})
+    }
+  }
+  // handleFirst = (index) => {
+  //   const { countriesPerPage2,currentPage2 } = this.state;
+  //   if(currentPage2>1){
+  //     this.setState({currentPage2:currentPage2-1})
+  //     this.setState({currentPage: index-countriesPerPage2})
+  //   }
+  // }
+
+  // handleLast = (index) => {
+  //   const { countriesPerPage2,currentPage2 } = this.state;
     
-    if(currentPage2<countriesPerPage2){
-      this.setState({currentPage2:currentPage2+1})
-      this.setState({currentPage: index+countriesPerPage2})
-    }
-  }
+  //   if(currentPage2<countriesPerPage2){
+  //     this.setState({currentPage2:currentPage2+1})
+  //     this.setState({currentPage: index+countriesPerPage2})
+  //   }
+  // }
 
   render() {
     const {countries, isLoading, countriesPerPage, currentPage,currentPage2,countriesPerPage2} = this.state;
