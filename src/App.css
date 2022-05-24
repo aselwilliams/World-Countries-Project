@@ -6,11 +6,12 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
+  font-family:Tahoma, sans-serif;
 }
 
-h4 {
-  margin-top:5px;
-  padding:5px
+h5 {
+  margin-top:7px;
+  font-weight: bold;
 }
 
 .main-container {
@@ -31,7 +32,6 @@ h4 {
   align-items: center;
   border-bottom: 1px solid #eee;
   border-top: 1px solid #eee;
-  
 }
 
 .flex {
@@ -75,4 +75,23 @@ img {
   border: 1px solid #ccc;
   justify-content: center;
    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.flex-links{
+  display: flex;
+  justify-content: end;
+}
+
+.active{
+  background-color: blue;
+  color:white;
+}
+
+.disabled{
+  color: grey;
+}
+
+.no-record{
+  color:red;
+  font-weight: bold;
 }
