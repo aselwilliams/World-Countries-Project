@@ -49,7 +49,7 @@ function App() {
             <div>
               <Pagination>
                 <Pagination.First onClick={() => changePage(1)} />
-                <Pagination.Prev onClick={() => changePage(currentPage>1 ? currentPage - 1 : 1)} />
+                <Pagination.Prev onClick={() => changePage(currentPage>1 ? currentPage - 1 : 1)} disabled={currentPage===1 ? true : false}/>
                 <Pagination.Item
                   onClick={() =>
                     changePage(currentPage > 5 ? currentPage - 4 : 1)
@@ -85,7 +85,7 @@ function App() {
                   {currentPage > 5 ? currentPage : 5}
                 </Pagination.Item>
 
-                <Pagination.Next onClick={() => changePage(currentPage<Math.ceil(countries.length / itemsPerPage) ? currentPage + 1 : Math.ceil(countries.length / itemsPerPage))} />
+                <Pagination.Next disabled={currentPage===Math.ceil(countries.length / itemsPerPage) ? true : false} onClick={() => changePage(currentPage<Math.ceil(countries.length / itemsPerPage) ? currentPage + 1 : Math.ceil(countries.length / itemsPerPage))}  />
                 <Pagination.Last onClick={() => changePage(Math.ceil(countries.length / itemsPerPage))} />
               </Pagination>
             </div>
