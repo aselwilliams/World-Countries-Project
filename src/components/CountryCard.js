@@ -7,11 +7,11 @@ function CountryCard({country, index}) {
           <h4>{country.name.common}</h4>
           <p>
             <strong>Cap:</strong>
-            <span>{country.capital}</span>
+            <span className={country.capital ? '' : 'no-record'}>{country.capital ? country.capital : "No record"}</span>
           </p>
           <p>
             <strong>Pop:</strong>
-            <span>{country.population}</span>
+            <span className={country.population ? '' : 'no-record'}>{country.population ? country.population : 'No record'}</span>
           </p>
         </section>
   )
