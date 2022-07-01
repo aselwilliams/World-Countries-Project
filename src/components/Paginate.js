@@ -1,7 +1,9 @@
-import React from "react";
+import React,{useContext} from "react";
+import {GlobalContext} from '../context-api/GlobalContext'
 import Pagination from "react-bootstrap/Pagination";
 
-function Paginate({ currentPage, countries, changePage, itemsPerPage }) {
+function Paginate() {
+  const {currentPage, countries, changePage,itemsPerPage}=useContext(GlobalContext)
   return (
     <Pagination>
       <Pagination.First onClick={() => changePage(1)} />

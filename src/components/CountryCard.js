@@ -1,8 +1,8 @@
 import React from 'react'
 
-function CountryCard({country, index}) {
+function CountryCard({country}) {
   return (
-    <section className="each-card" key={index}>
+    <section className="each-card" >
           <img src={country.flags.png} alt={country.name.common} flag />
           <h4>{country.name.common}</h4>
           <p>

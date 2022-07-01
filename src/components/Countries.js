@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../context-api/GlobalContext";
 import CountryCard from './CountryCard'
 
-function Countries({ currentItems }) {
+function Countries() {
+  const {currentItems}=useContext(GlobalContext)
   return (
     <div className="card">
       {currentItems.map((country, index) => (
-          <CountryCard country={country} index={index} />
+          <CountryCard country={country} key={index}/>
       ))}
     </div>
   );
